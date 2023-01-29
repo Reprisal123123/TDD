@@ -13,7 +13,12 @@ public class PasswordStrengthMeter {
 
         boolean containsUppercase = meetsContainingUppercaseCriteria(password);
 
+        // 길이 조건만 만족하는 경우
         if(lengthEnough && !containsNum && !containsUppercase) {
+            return PasswordStrength.WEAK;
+        }
+
+        if(!lengthEnough && containsNum && !containsUppercase) {
             return PasswordStrength.WEAK;
         }
 
