@@ -39,9 +39,21 @@ public class PasswordStrengthMeterTest {
 
     // 숫자가 없는 경우를 제외한 다른 조건을 만족시켰을 때
     @Test
-    void meetsOtherCritera_except_for_number_Then_Normal() {
+    void meetsOtherCriteria_except_for_number_Then_Normal() {
 
         assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
 
+    }
+
+    // null 값이 들어왔을 때
+    @Test
+    void nullInput_Then_Invalid() {
+        assertStrength(null, PasswordStrength.INVALID);
+    }
+
+    // 빈 문자열이 들어왔을 때
+    @Test
+    void emptyInput_Then_Invalid() {
+        assertStrength("", PasswordStrength.INVALID);
     }
 }
