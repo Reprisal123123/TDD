@@ -12,18 +12,36 @@ public class PasswordStrengthMeter {
             return PasswordStrength.NORMAL;
         }
 
+        // 숫자를 포함하지 않는 경우
         boolean containsNum = meetsContainingNumberCriteria(password);
 
-        // 숫자를 포함하지 않으면
         if(!containsNum) return PasswordStrength.NORMAL;
+
+        // 대문자를 포함하지 않는 경우
+        boolean containsUppercase = meetsContainingUppercaseCriteria(password);
+
+        if(!containsUppercase) {
+            return PasswordStrength.NORMAL;
+        }
 
         // 그 외는 모두 STRONG
         return PasswordStrength.STRONG;
     }
 
+    // 숫자를 포함하고 있는지 검사하는 메서드
     private boolean meetsContainingNumberCriteria(String password) {
         for(char ch : password.toCharArray()) {
             if(ch >= '0' && ch <= '9') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 대문자를 포함하고 있는지 검사하는 메서드
+    private boolean meetsContainingUppercaseCriteria(String password) {
+        for(char ch : password.toCharArray()) {
+            if(Character.isUpperCase(ch)) {
                 return true;
             }
         }
