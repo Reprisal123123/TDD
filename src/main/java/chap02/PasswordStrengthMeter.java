@@ -18,7 +18,7 @@ public class PasswordStrengthMeter {
         if(containsUppercase) metCounts++;
 
         // 1가지 조건만 만족하는 경우 WEAK 반환
-        if(metCounts == 1) return PasswordStrength.WEAK;
+        if(metCounts <= 1) return PasswordStrength.WEAK;
 
         // 2가지 조건만 만족하는 경우 NORMAL 반환
         if(metCounts == 2) return PasswordStrength.NORMAL;
