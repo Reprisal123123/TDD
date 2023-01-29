@@ -7,28 +7,21 @@ public class PasswordStrengthMeter {
         // 비밀번호가 null이거나 빈 문자열이면 INVALID를 반환
         if(StringUtils.isBlank(password)) return PasswordStrength.INVALID;
 
+        int metCounts = 0;
         boolean lengthEnough = (password.length() >= 8);
+        if(lengthEnough) metCounts++;
 
         boolean containsNum = meetsContainingNumberCriteria(password);
+        if(containsNum) metCounts++;
 
         boolean containsUppercase = meetsContainingUppercaseCriteria(password);
+        if(containsUppercase) metCounts++;
 
-        // 길이 조건만 만족하는 경우
-        if(lengthEnough && !containsNum && !containsUppercase) {
-            return PasswordStrength.WEAK;
-        }
+        // 1가지 조건만 만족하는 경우 WEAK 반환
+        if(metCounts == 1) return PasswordStrength.WEAK;
 
-        if(!lengthEnough && containsNum && !containsUppercase) {
-            return PasswordStrength.WEAK;
-        }
-
-        if(!lengthEnough && !containsNum && containsUppercase) {
-            return PasswordStrength.WEAK;
-        }
-
-        if(!lengthEnough) return PasswordStrength.NORMAL;
-        if(!containsNum) return PasswordStrength.NORMAL;
-        if(!containsUppercase) return PasswordStrength.NORMAL;
+        // 2가지 조건만 만족하는 경우 NORMAL 반환
+        if(metCounts == 2) return PasswordStrength.NORMAL;
 
         // 그 외는 모두 STRONG
         return PasswordStrength.STRONG;
