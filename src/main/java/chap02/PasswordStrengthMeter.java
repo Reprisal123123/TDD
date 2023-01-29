@@ -4,25 +4,22 @@ import org.junit.platform.commons.util.StringUtils;
 
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String password) {
-        // 비밀번호가 null이거나 빈 문자열이면
+        // 비밀번호가 null이거나 빈 문자열이면 INVALID를 반환
         if(StringUtils.isBlank(password)) return PasswordStrength.INVALID;
 
-        // 길이가 8보다 짧으면
-        if(password.length() < 8) {
-            return PasswordStrength.NORMAL;
-        }
+        boolean lengthEnough = (password.length() >= 8);
 
-        // 숫자를 포함하지 않는 경우
         boolean containsNum = meetsContainingNumberCriteria(password);
 
-        if(!containsNum) return PasswordStrength.NORMAL;
-
-        // 대문자를 포함하지 않는 경우
         boolean containsUppercase = meetsContainingUppercaseCriteria(password);
 
-        if(!containsUppercase) {
-            return PasswordStrength.NORMAL;
+        if(lengthEnough && !containsNum && !containsUppercase) {
+            return PasswordStrength.WEAK;
         }
+
+        if(!lengthEnough) return PasswordStrength.NORMAL;
+        if(!containsNum) return PasswordStrength.NORMAL;
+        if(!containsUppercase) return PasswordStrength.NORMAL;
 
         // 그 외는 모두 STRONG
         return PasswordStrength.STRONG;
