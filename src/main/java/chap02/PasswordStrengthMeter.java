@@ -4,7 +4,7 @@ import org.junit.platform.commons.util.StringUtils;
 
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String password) {
-        // 비밀번호가 null이거나 빈 문자열이면 INVALID를 반환
+        // 비밀번호가 null이거나 빈 문자열이면 INVALID를 반환 - 예외상황을 먼저 테스트하기
         if(StringUtils.isBlank(password)) return PasswordStrength.INVALID;
 
         int metCounts = getMetCriteriaCounts(password);
